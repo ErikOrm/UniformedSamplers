@@ -8,12 +8,16 @@ def readInstance(instance_name):
 
     file = open(instance_name, 'r')
     data = {}
+
+    # time steps, uintersections, streets, cars, bonus points
     D, I, S, V, F = [int(x) for x in file.readline().split()]
 
+    # [start, end, ]
     street_list = []
     street_names = []
+    # street indices per car
     path_list = []
-
+    # remaining time per car
     time_left = []
 
     for i in range(S):
@@ -24,13 +28,11 @@ def readInstance(instance_name):
 
     for i in range(V):
         tmp_list = file.readline().split()
-        print(tmp_list)
         path_list.append([street_names.index(x) for x in tmp_list[1:]])
         time_left.append(np.sum(street_list[x][2] for x in path_list[-1]))
 
-    path_current_street = [path_list[x][0] for x in range(len(path_list))]
 
-    return D, I, S, V, F, street_list, street_names, path_list, path_current_street, time_left
+    return D, I, S, V, F, street_list, street_names, path_list, time_left
 
 
 
