@@ -5,7 +5,8 @@ class GlobalQueue:
         self.queue = {}
         self.crossings = crossings
 
-    def add(self):
+    def add(self, car, t):
+        self.queue[t].append(car)
 
     def remove(self, t):
         n_finished = 0
