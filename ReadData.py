@@ -54,8 +54,12 @@ def run_simulation(instance_name, f_name):
 
     D, I, S, V, F, street_list, street_names, path_list, time_left, cars = readInstance(instance_name)
 
+    total_score = 0
+
     crossings = []
     global_queue = GlobalQueue(crossings)
+
+
 
     for car in cars:
         pass
@@ -65,14 +69,14 @@ def run_simulation(instance_name, f_name):
         if "basic":
             basic_act(time_step)
 
-
+        total_score += score(D, time_step, n_cars, bonus)
 
 
 def basic_act(time_step):
     pass
 
 def score(D, time_step, n_cars, bonus):
-    pass
+    return n_cars*(bonus + (D - time_step))
 
 
 if __name__ == "__main__":
