@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from Simulator import *
+#
 
 class car:
 
