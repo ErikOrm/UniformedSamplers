@@ -1,6 +1,17 @@
 import argparse
 import numpy as np
 
+class car:
+
+    def __init__(self, ID, path_list, pointer, time_left):
+        self.ID = ID
+        self. path_list = path_list
+        self.pointer = pointer
+        self.time_left = time_left
+
+    def __repr__(self):
+        return "car: %i " % self.ID
+
 
 
 def readInstance(instance_name):
@@ -12,7 +23,7 @@ def readInstance(instance_name):
     # time steps, uintersections, streets, cars, bonus points
     D, I, S, V, F = [int(x) for x in file.readline().split()]
 
-    # [start, end, ]
+    # [start, end, tid]
     street_list = []
     street_names = []
     # street indices per car
@@ -32,17 +43,26 @@ def readInstance(instance_name):
         time_left.append(np.sum(street_list[x][2] for x in path_list[-1]))
 
 
-    cars = [(x, path_list[x], 0, time_left[x]) for x in range(len(path_list))]
+    cars = [car(x, path_list[x], 0, time_left[x]) for x in range(len(path_list))]
 
 
     return D, I, S, V, F, street_list, street_names, path_list, time_left, cars
 
 
+def run_simulation(instance_name):
 
-"""
+    D, I, S, V, F, street_list, street_names, path_list, time_left, cars = readInstance(instance_name)
+
+    for car in cars:
+        pass
+        # add_to_queue(car, 0)
+
+    for time_step in range(len(D)):
+        pass
 
 
-"""
+def basic_act(time_step):
+    pass
 
 
 
