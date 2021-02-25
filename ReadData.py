@@ -51,8 +51,10 @@ def readInstance(instance_name):
     return D, I, S, V, F, street_list, street_names, path_list, time_left, cars
 
 
-def print_solution(list_of_traffic_light_assignments):
-    pass
+def print_solution(list_of_traffic_light_assignments, I, S, street_list, street_names):
+
+    # {cr : [(prev_cr, time)]}
+    # [[prev_cr, time]]
 
     prev_crossing_next_crossing_to_street_dict = {(cr1, cr2): -1 for cr1 in range(I) for cr2 in range(I)}
 
@@ -60,22 +62,37 @@ def print_solution(list_of_traffic_light_assignments):
         prev_crossing_next_crossing_to_street_dict[(street_list[st][0], street_list[st][1])] = street_names[st]
 
 
+    lines = {(cr, prev_cr) : -1 for cr in range(I) for prev_cr in range(I)}
 
-    crossing_street_time_dict = {(crossing, street_name) : [] for crossing in range(I) for street_name in street_names}
+    number_of_intersections_w_tl = 0
+    number_streets_w_tl = [0]*I
 
-    for time_step in range(D):
-        for cr in range(I):
-            traffic_light_assignments = list_of_traffic_light_assignments[time_step]
-            street_name = crossing_street_time_dict[(traffic_light_assignments[cr], cr)]
-            crossing_street_time_dict
+    for cr in range(I):
+        found = False
+        number_streets_w_tl[cr] = 0
+        for prev_cr, time in list_of_traffic_light_assignments[cr]:
+            street_name = prev_crossing_next_crossing_to_street_dict[(prev_cr, cr)]
+            assert street_name != -1, "failure at converting to street name"
+            lines[cr, prev_cr] = (street_name, time)
+            number_streets_w_tl[cr] += 1
+            found = True
+        if found:
+            number_of_intersections_w_tl += 1
+
+    print(number_of_intersections_w_tl)
+    for cr in range(I):
+        if number_streets_w_tl[cr] > 0:
+            print(cr)
+            print(number_streets_w_tl[cr])
+            for prev_cr in range(I):
+                l = lines[(cr, prev_cr)]
+                if l != -1:
+                    print(l[0], l[1])
 
 
 
 
 
-
-
-    print("hej!")
 
 
 def basic_act(time_step):
@@ -87,6 +104,9 @@ def score(D, time_step, n_cars, bonus):
 
 if __name__ == "__main__":
 
+
+
+
     parser = argparse.ArgumentParser(description='Basic data reader')
     parser.add_argument('instance_name', help='instance to read')
 
@@ -96,5 +116,5 @@ if __name__ == "__main__":
         print("Kindly provide a filename. Use -h for options.")
         sys.exit(1)
 
-    data = readInstance(args.instance_name)
-    print(data)
+    D, I, S, V, F, street_list, street_names, path_list, time_left, cars = readInstance(args.instance_name)
+    print_solution([[(2, 2)], [(0, 1), (3,2)], [(1,1)], []], I, S, street_list, street_names)
