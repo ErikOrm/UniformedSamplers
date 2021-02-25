@@ -56,7 +56,7 @@ def run_simulation(instance_name, act_function, temp=1.0, prioleft=3, discount=0
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Basic data reader')
-    parser.add_argument('instance_name', help='instance to read')
+    parser.add_argument('--instance_name', help='instance to read')
     #parser.add_argument('act', help='actor')
     print(parser)
     args = parser.parse_args()
