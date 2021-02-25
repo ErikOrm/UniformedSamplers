@@ -6,7 +6,7 @@ class car:
 
     def __init__(self, ID, path_list, pointer, time_left):
         self.ID = ID
-        self. path_list = path_list
+        self.path_list = path_list
         self.pointer = pointer
         self.time_left = time_left
 
