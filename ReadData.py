@@ -1,5 +1,6 @@
 import argparse
 import numpy as np
+from Simulator import *
 
 class car:
 
@@ -49,21 +50,29 @@ def readInstance(instance_name):
     return D, I, S, V, F, street_list, street_names, path_list, time_left, cars
 
 
-def run_simulation(instance_name):
+def run_simulation(instance_name, f_name):
 
     D, I, S, V, F, street_list, street_names, path_list, time_left, cars = readInstance(instance_name)
+
+    crossings = []
+    global_queue = GlobalQueue(crossings)
 
     for car in cars:
         pass
         # add_to_queue(car, 0)
 
     for time_step in range(len(D)):
-        pass
+        if "basic":
+            basic_act(time_step)
+
+
 
 
 def basic_act(time_step):
     pass
 
+def score(D, time_step, n_cars, bonus):
+    
 
 
 if __name__ == "__main__":
