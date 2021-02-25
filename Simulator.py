@@ -29,7 +29,7 @@ class Crossing:
         #lightindex[i] is value of street
         moved_cars = []
         for crossing_id, light in enumerate(lightindex):
-            car = self.crossings[crossing_id][light].pop()
+            car = self.crossings[crossing_id][light].pop(-1)
             car.pointer +=1
             moved_cars.append(car)
 
