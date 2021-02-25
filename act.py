@@ -12,5 +12,5 @@ def prioAct(params):
         weight = np.array([np.exp(x/params.temp) for x in light.values()])
         weight /= np.sum(weight)
         time = np.random.binomial(20, p=weight)
-        lighton.append(time)
+        lighton.append((time, light.keys()))
     return lighton
