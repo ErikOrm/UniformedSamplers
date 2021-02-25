@@ -32,9 +32,17 @@ def readInstance(instance_name):
         time_left.append(np.sum(street_list[x][2] for x in path_list[-1]))
 
 
-    return D, I, S, V, F, street_list, street_names, path_list, time_left
+    cars = [(x, path_list[x], 0, time_left[x]) for x in range(len(path_list))]
 
 
+    return D, I, S, V, F, street_list, street_names, path_list, time_left, cars
+
+
+
+"""
+
+
+"""
 
 
 
