@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-from Simulator import *
+#
 
 class car:
 
@@ -72,7 +72,7 @@ def basic_act(time_step):
     pass
 
 def score(D, time_step, n_cars, bonus):
-    
+    pass
 
 
 if __name__ == "__main__":
