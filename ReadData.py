@@ -50,30 +50,71 @@ def readInstance(instance_name):
     return D, I, S, V, F, street_list, street_names, path_list, time_left, cars
 
 
-def run_simulation(instance_name, f_name):
+def run_simulation(instance_name, act_function):
 
     D, I, S, V, F, street_list, street_names, path_list, time_left, cars = readInstance(instance_name)
 
     total_score = 0
 
-    crossings = []
+    crossings = Crossing(street_list)
     global_queue = GlobalQueue(crossings)
 
 
+    list_of_traffic_light_assignments = []
 
+
+    # initialise queues
     for car in cars:
-        pass
-        # add_to_queue(car, 0)
+        from_crossing = street_list[car.path_list[0]][0]
+        current_crossing = street_list[car.path_list[0]][1]
+        crossings[current_crossing][from_crossing].append(car)
 
+    # simulation loop
     for time_step in range(len(D)):
-        if "basic":
-            basic_act(time_step)
 
-        total_score += score(D, time_step, n_cars, bonus)
+        n_finished = global_queue.remove(time_step)
+
+        traffic_light_assignments = act_function(time_step)
+
+        list_of_traffic_light_assignments.append(traffic_light_assignments)
+
+        moved_cars = crossings.trafficlight(traffic_light_assignments)
+        for car in moved_cars:
+            global_queue.add(car, time_step + street_list[car.path_list[car.pointer]][2])
+        total_score += score(D, time_step, n_finished, bonus)
+
+    return score, list_of_traffic_light_assignments
+
+
+def print_solution(list_of_traffic_light_assignments):
+    pass
+
+    prev_crossing_next_crossing_to_street_dict = {(cr1, cr2): -1 for cr1 in range(I) for cr2 in range(I)}
+
+    for st in range(S):
+        prev_crossing_next_crossing_to_street_dict[(street_list[st][0], street_list[st][1])] = street_names[st]
+
+
+
+    crossing_street_time_dict = {(crossing, street_name) : [] for crossing in range(I) for street_name in street_names}
+
+    for time_step in range(D):
+        for cr in range(I):
+            traffic_light_assignments = list_of_traffic_light_assignments[time_step]
+            street_name = crossing_street_time_dict[(traffic_light_assignments[cr], cr)]
+            crossing_street_time_dict
+
+
+
+
+
+
+
+    print("hej!")
 
 
 def basic_act(time_step):
-    pass
+    return []
 
 def score(D, time_step, n_cars, bonus):
     return n_cars*(bonus + (D - time_step))
